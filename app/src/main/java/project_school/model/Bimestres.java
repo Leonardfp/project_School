@@ -1,16 +1,29 @@
 package project_school.model;
 
 public class Bimestres {
-    public float nota;
-    public int bimestre;
+    private double nota1;
+    private double nota2;
+    private double nota3;
+    private String descricao;
 
-    public Bimestres(float nota) {
-        this.nota = nota; // fazer array
+    public Bimestres(double nota1, double nota2, double nota3, String descricao) {
+        this.nota1 = nota1;
+        this.nota2 = nota2;
+        this.nota3 = nota3;
+        this.descricao = descricao;
     }
 
     public Bimestres() {
-        //TODO Auto-generated constructor stub
+        // TODO Auto-generated constructor stub
+    }
+
+    @Override
+    public String toString() {
+        return "Bimestre{" +
+                "nota1=" + nota1 +
+                ", nota2=" + nota2 +
+                ", nota3=" + nota3 +
+                ", descricao='" + descricao + '\'' +
+                '}';
     }
 }
-
-

@@ -11,7 +11,6 @@ public class App{
         ConexaoSingleton c = new ConexaoSingleton();
         PersonDao p = new PersonDao();
         c.getConexao();
-        c.createTables();
         p.listarAlunos();
 
     }
