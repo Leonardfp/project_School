@@ -45,7 +45,7 @@ public class PersonDao {
     }
     public List<Aluno> listarAlunos() {
         List<Aluno> alunos = new ArrayList<>();
-        String sql = "SELECT * FROM alunos";
+        String sql = "SELECT * FROM PERSON";
         try (PreparedStatement stmt = conexao.prepareStatement(sql);
                 ResultSet rs = stmt.executeQuery()) {
             while (rs.next()) {
@@ -57,10 +57,12 @@ public class PersonDao {
                         rs.getFloat("nota"),
                         rs.getInt("bimestre"));
                 alunos.add(aluno);
+                conexao.close();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+         System.out.println(e);
         }
+
         return alunos;
     }
 }
