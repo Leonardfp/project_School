@@ -50,10 +50,12 @@ public class PersonDao {
                 List<Bimestres> notas = buscBimestres(bimestreId);
                 Aluno aluno = new Aluno(id, nome, idade, curso, notas, identificacao);
                 alunos.add(aluno);
+                conexao.close();
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+         System.out.println(e);
         }
+
         return alunos;
     }
 
