@@ -27,7 +27,7 @@ public class PersonDao {
             stmt.setString(1, aluno.name);
             stmt.setInt(2, aluno.idade);
             stmt.setString(3, aluno.curso);
-            stmt.setFloat(4, aluno.notas); // tera que mudar para arrays
+            // stmt.setFloat(4, aluno.notas); // tera que mudar para arrays
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
