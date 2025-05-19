@@ -16,9 +16,27 @@ public class ConexaoSingleton {
         return conexao;
     }
 
+    public static boolean tabelasExistem() throws SQLException, ClassNotFoundException {
+        Connection c = getConexao();
+        String[] tabelas = { "PERSON", "BIMESTRES", "ESCOLA" };
+        for (String tabela : tabelas) {
+            String sql = "SELECT name FROM sqlite_master WHERE type='table' AND name='" + tabela + "'";
+            try (java.sql.Statement stmt = c.createStatement();
+                    java.sql.ResultSet rs = stmt.executeQuery(sql)) {
+                if (!rs.next()) {
+                    c.close();
+                    return false;
+                }
+            }
+        }
+        c.close();
+        return true;
+    }
+
     public static String createTables() throws SQLException, ClassNotFoundException {
         java.sql.Statement stmt = null;
         Connection c = getConexao();
+        if (!tabelasExistem()) {
         try {
             stmt = c.createStatement();
             String sqlSchool = "CREATE TABLE IF NOT EXISTS ESCOLA(" +
@@ -72,6 +90,7 @@ public class ConexaoSingleton {
         } catch (Exception e) {
             System.out.println(e);
         }
+    }
         return "Tabela criada com sucesso!";
     }
 
