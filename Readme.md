@@ -53,5 +53,7 @@ Armazena as notas e descrição do bimestre de uma pessoa.
 ##Utilizado:
 - [x] Java
 - [x] SQLite
-- [ ] Interface..
+- [ ] Interface
+
+
 ![](https://media.lordicon.com/icons/wired/flat/1323-java-code-language.gif)
