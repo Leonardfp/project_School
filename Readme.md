@@ -1,5 +1,3 @@
-# OBJETIVO
-- O objetivo desse programa é ser um sistema de escola onde será mostrar os alunos professores e notas de bimestres.
 
 # 📚 Sistema de Cadastro de Pessoas e Notas Bimestrais
 
