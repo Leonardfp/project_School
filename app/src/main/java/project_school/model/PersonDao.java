@@ -1,4 +1,5 @@
 package project_school.model;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -25,8 +26,24 @@ public class PersonDao {
             stmt.setString(1, aluno.name);
             stmt.setInt(2, aluno.idade);
             stmt.setString(3, aluno.curso);
-            // stmt.setFloat(4, aluno.notas); // tera que mudar para arrays
+            stmt.setString(4, aluno.identification);
             stmt.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void adicionarNotas(Aluno aluno){
+        // fazer verificação antes para saber qual aluno tera a tabela preenchida com o id;
+        String sql = "INSERT INTO BIMESTRES(NOTAS1,NOTAS2,NOTAS3) VALUES (?,?,?)";
+        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+            for (Bimestres bimestre : aluno.notas){
+                stmt.setDouble(1,bimestre.getNota1());
+                stmt.setDouble(2,bimestre.getNota2());
+                stmt.setDouble(3, bimestre.getNota3());
+                stmt.addBatch();
+            }
+            stmt.executeBatch();
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -51,7 +68,7 @@ public class PersonDao {
                 conexao.close();
             }
         } catch (SQLException e) {
-         System.out.println(e);
+            System.out.println(e);
         }
 
         return alunos;

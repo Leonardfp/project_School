@@ -17,6 +17,18 @@ public class Bimestres {
         // TODO Auto-generated constructor stub
     }
 
+    public double getNota1() {
+        return nota1;
+    }
+
+    public double getNota2() {
+        return nota2;
+    }
+
+    public double getNota3() {
+        return nota3;
+    }
+
     @Override
     public String toString() {
         return "Bimestre{" +
