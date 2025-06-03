@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 //Criar regra de negocio para verificação de aluno e professor ROLES
 /* como vo criar um sistema de notas durante as 3 notas?
@@ -33,13 +34,14 @@ public class PersonDao {
         }
     }
 
-    public void adicionarNotas(Aluno aluno){
-        // fazer verificação antes para saber qual aluno tera a tabela preenchida com o id;
+    public void adicionarNotas(Aluno aluno) {
+        // fazer verificação antes para saber qual aluno tera a tabela preenchida com o
+        // id;
         String sql = "INSERT INTO BIMESTRES(NOTAS1,NOTAS2,NOTAS3) VALUES (?,?,?)";
-        try(PreparedStatement stmt = conexao.prepareStatement(sql)){
-            for (Bimestres bimestre : aluno.notas){
-                stmt.setDouble(1,bimestre.getNota1());
-                stmt.setDouble(2,bimestre.getNota2());
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            for (Bimestres bimestre : aluno.notas) {
+                stmt.setDouble(1, bimestre.getNota1());
+                stmt.setDouble(2, bimestre.getNota2());
                 stmt.setDouble(3, bimestre.getNota3());
                 stmt.addBatch();
             }
@@ -65,12 +67,18 @@ public class PersonDao {
                 List<Bimestres> notas = buscBimestres(bimestreId);
                 Aluno aluno = new Aluno(id, nome, idade, curso, notas, identificacao);
                 alunos.add(aluno);
+                StringBuilder notasSt = new StringBuilder();
+                for (Bimestres b : notas) {
+                    notasSt.append(String.format("[%.2f,%.2f,%.2f]", b.getNota1(), b.getNota2(), b.getNota3()));
+                }
+                System.out.printf(
+                        "\n ID: %-5d NOME: %-20s IDADE: %-5d ID_BIMESTRE: %-5d CURSO: %-15s IDENTIFICAÇÃO: %-20s NOTAS: %-15s%n",
+                        id, nome, idade, bimestreId, curso, identificacao, notasSt.toString().trim());
                 conexao.close();
             }
         } catch (SQLException e) {
             System.out.println(e);
         }
-
         return alunos;
     }
 
@@ -93,5 +101,26 @@ public class PersonDao {
             e.printStackTrace();
         }
         return bimestres;
+    }
+
+    public void inserirAlunoViaConsole() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Nome: ");
+        String nome = sc.nextLine();
+        System.out.println("Idade: ");
+        int idade = sc.nextInt();
+        sc.nextLine();
+        System.out.println("Curso:");
+        String curso = sc.nextLine();
+        System.out.println("Identificação ALUNO/PROFESSOR");
+        String identificacao = sc.nextLine();
+        Aluno aluno = new Aluno(0, nome, idade, curso, new ArrayList<>(), identificacao);
+        adicionarAluno(aluno);
+
+    }
+
+    public void inserirNotasViaConsole() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Qual o id do aluno que queira adicionar a nota");
     }
 }

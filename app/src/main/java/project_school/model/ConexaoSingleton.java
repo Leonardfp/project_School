@@ -24,12 +24,11 @@ public class ConexaoSingleton {
             try (java.sql.Statement stmt = c.createStatement();
                     java.sql.ResultSet rs = stmt.executeQuery(sql)) {
                 if (!rs.next()) {
-                    c.close();
                     return false;
                 }
             }
         }
-        c.close();
+       
         return true;
     }
 
