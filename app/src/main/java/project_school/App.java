@@ -16,6 +16,10 @@ import project_school.model.PersonDao;
 public class App {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         ConexaoSingleton.getConexao();
-        
+        // ConexaoSingleton.createTables();
+        PersonDao p = new PersonDao();
+        p.inserirAlunoViaConsole();
+        // p.listarAlunos();
+    
     }
 }

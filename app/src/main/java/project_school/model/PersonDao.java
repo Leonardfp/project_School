@@ -65,21 +65,23 @@ public class PersonDao {
                 int bimestreId = rs.getInt("BIMESTRE_ID");
                 String identificacao = rs.getString("IDENTIFICATION");
                 List<Bimestres> notas = buscBimestres(bimestreId);
-                Aluno aluno = new Aluno(id, nome, idade, curso, notas, identificacao);
+                Aluno aluno = new Aluno(id, nome, idade, curso,bimestreId, notas, identificacao);
                 alunos.add(aluno);
                 StringBuilder notasSt = new StringBuilder();
                 for (Bimestres b : notas) {
                     notasSt.append(String.format("[%.2f,%.2f,%.2f]", b.getNota1(), b.getNota2(), b.getNota3()));
                 }
                 System.out.printf(
-                        "\n ID: %-5d NOME: %-20s IDADE: %-5d ID_BIMESTRE: %-5d CURSO: %-15s IDENTIFICAÇÃO: %-20s NOTAS: %-15s%n",
-                        id, nome, idade, bimestreId, curso, identificacao, notasSt.toString().trim());
-                conexao.close();
+                        "\n ID: %-5d NOME: %-20s IDADE: %-5d CURSO: %-15s ID_BIMESTRE: %-5d IDENTIFICAÇÃO: %-20s NOTAS: %-15s%n",
+                        id, nome, idade, bimestreId, curso,bimestreId, identificacao, notasSt.toString().trim());
             }
+             conexao.close();
         } catch (SQLException e) {
             System.out.println(e);
         }
+        
         return alunos;
+        
     }
 
     public List<Bimestres> buscBimestres(int bimestreId) {
@@ -114,7 +116,7 @@ public class PersonDao {
         String curso = sc.nextLine();
         System.out.println("Identificação ALUNO/PROFESSOR");
         String identificacao = sc.nextLine();
-        Aluno aluno = new Aluno(0, nome, idade, curso, new ArrayList<>(), identificacao);
+        Aluno aluno = new Aluno(0, nome, idade, curso,0, new ArrayList<>(), identificacao);
         adicionarAluno(aluno);
 
     }

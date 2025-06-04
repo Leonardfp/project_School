@@ -7,12 +7,14 @@ public class Aluno {
     public String curso;
     public String name;
     public List<Bimestres> notas;
+    public int bimestreId;
     public String identification;
 
-    public Aluno(int id, String name, int idade, String curso, List<Bimestres> notas, String identification) {
+    public Aluno(int id, String name, int idade, String curso,int bimestreId, List<Bimestres> notas, String identification) {
         this.idade = idade;
         this.curso = curso;
         this.name = name;
+        this.bimestreId = bimestreId;
         this.notas = notas;
         this.identification = identification;
     }
@@ -24,6 +26,7 @@ public class Aluno {
                 ", nome='" + name + '\'' +
                 ", idade=" + idade +
                 ", curso='" + curso + '\'' +
+                ", bimestre_id"+ bimestreId +'\''+
                 ", identificacao='" + identification + '\'' +
                 '}';
     }
