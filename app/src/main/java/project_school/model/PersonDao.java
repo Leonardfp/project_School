@@ -72,7 +72,7 @@ public class PersonDao {
                     notasSt.append(String.format("[%.2f,%.2f,%.2f]", b.getNota1(), b.getNota2(), b.getNota3()));
                 }
                 System.out.printf(
-                        "\n ID: %-5d NOME: %-20s IDADE: %-5d CURSO: %-15s ID_BIMESTRE: %-5d IDENTIFICAÇÃO: %-20s NOTAS: %-15s%n",
+                        "\n ID: %-5d NOME: %-20s IDADE: %-5d ID_BIMESTRE: %-5d CURSO: %-15s  IDENTIFICAÇÃO: %-20s NOTAS: %-15s%n",
                         id, nome, idade, bimestreId, curso,bimestreId, identificacao, notasSt.toString().trim());
             }
              conexao.close();

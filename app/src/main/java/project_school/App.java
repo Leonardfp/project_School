@@ -18,8 +18,8 @@ public class App {
         ConexaoSingleton.getConexao();
         // ConexaoSingleton.createTables();
         PersonDao p = new PersonDao();
-        p.inserirAlunoViaConsole();
-        // p.listarAlunos();
+        // p.inserirAlunoViaConsole();
+        p.listarAlunos();
     
     }
 }

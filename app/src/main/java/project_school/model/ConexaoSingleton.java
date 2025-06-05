@@ -67,10 +67,10 @@ public class ConexaoSingleton {
                         "BEGIN " +
                         "UPDATE BIMESTRES " +
                         "SET DESCRICAO = CASE " +
-                        "WHEN NEW.NOTAS1 >=0 AND NEW.NOTAS2 = 0 AND NEW.NOTAS3 =0 THEN 'PRIMEIRO BIMESTRE' " +
+                        "WHEN NEW.NOTAS1 >=0 AND NEW.NOTAS2 = 0 AND NEW.NOTAS3 = 0 THEN 'PRIMEIRO BIMESTRE' " +
                         "WHEN NEW.NOTAS1 > 0 AND NEW.NOTAS2 >=0 AND NEW.NOTAS3 = 0 THEN 'SEGUNDO BIMESTRE' " +
-                        "WHEN NEW.NOTAS > 0 AND NEW.NOTAS2 > 0 AND NEW.NOTAS >= 0 THEN 'TERCEIRO BIMESTRE' " +
-                        "WHEN NEW.NOTAS > 0 AND NEW.NOTAS2 > 0 AND NEW.NOTAS > 0 THEN 'TERCEIRO BIMESTRE ' " +
+                        "WHEN NEW.NOTAS1 > 0 AND NEW.NOTAS2 > 0 AND NEW.NOTAS3 >= 0 THEN 'TERCEIRO BIMESTRE' " +
+                        "WHEN NEW.NOTAS1 > 0 AND NEW.NOTAS2 > 0 AND NEW.NOTAS3 > 0 THEN 'TERCEIRO BIMESTRE ' " +
                         "END " +
                         "WHERE ID = NEW.ID; " +
                         "END;";
@@ -85,7 +85,7 @@ public class ConexaoSingleton {
                 stmt.executeUpdate(sqlSchool);
                 stmt.executeUpdate(sqlPerson);
                 stmt.execute(sqlBimestre_trigger);
-                stmt.executeUpdate(sql_Insert_person);
+                stmt.execute(sql_Insert_person);
                 stmt.close();
                 c.close();
 
