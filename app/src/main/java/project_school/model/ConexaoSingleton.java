@@ -75,12 +75,21 @@ public class ConexaoSingleton {
                         "WHERE ID = NEW.ID; " +
                         "END;";
                 String sql_Insert_person = "DROP TRIGGER IF EXISTS after_insert_person;" +
-                        "CREATE TRIGGER after_insert_person " +
-                        "AFTER INSERT ON PERSON " +
-                        "WHEN NEW.IDENTIFICATION = 'ALUNO' " +
-                        "BEGIN " +
-                        "INSERT INTO BIMESTRES(PERSON_ID_B) VALUES (NEW.ID); " +
+                        "CREATE TRIGGER after_insert_person" +
+                        "AFTER INSERT ON PERSON" +
+                        "FOR EACH ROW" +
+                        "BEGIN" +
+                        "IF NEW.IDENTIFICATION ='ALUNO' THEN" +
+                        "INSERT INTO BIMESTRES (PERSON_ID_B) VALUES (NEW.ID);" +
+                        "END IF;" +
                         "END;";
+
+                // "CREATE TRIGGER after_insert_person " +
+                // "AFTER INSERT ON PERSON " +
+                // "WHEN NEW.IDENTIFICATION = 'ALUNO' " +
+                // "BEGIN " +
+                // "INSERT INTO BIMESTRES(PERSON_ID_B) VALUES (NEW.ID); " +
+                // "END;";
                 stmt.executeUpdate(sqlBimestre);
                 stmt.executeUpdate(sqlSchool);
                 stmt.executeUpdate(sqlPerson);

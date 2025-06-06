@@ -72,8 +72,8 @@ public class PersonDao {
                     notasSt.append(String.format("[%.2f,%.2f,%.2f]", b.getNota1(), b.getNota2(), b.getNota3()));
                 }
                 System.out.printf(
-                        "\n ID: %-5d NOME: %-20s IDADE: %-5d ID_BIMESTRE: %-5d CURSO: %-15s  IDENTIFICAÇÃO: %-20s NOTAS: %-15s%n",
-                        id, nome, idade, bimestreId, curso,bimestreId, identificacao, notasSt.toString().trim());
+                        "\n ID: %-5d|NOME: %-20s|IDADE: %-5d|ID_BIMESTRE: %-5d|CURSO: %-15s|IDENTIFICAÇÃO: %-20s|NOTAS: %-15s%n",
+                        id, nome, idade, bimestreId, curso, identificacao, notasSt.toString().trim());
             }
              conexao.close();
         } catch (SQLException e) {
@@ -118,11 +118,12 @@ public class PersonDao {
         String identificacao = sc.nextLine();
         Aluno aluno = new Aluno(0, nome, idade, curso,0, new ArrayList<>(), identificacao);
         adicionarAluno(aluno);
-
+        sc.close();
     }
 
     public void inserirNotasViaConsole() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Qual o id do aluno que queira adicionar a nota");
+        sc.close();
     }
 }
