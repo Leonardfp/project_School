@@ -93,8 +93,8 @@ public class ConexaoSingleton {
                 stmt.executeUpdate(sqlBimestre);
                 stmt.executeUpdate(sqlSchool);
                 stmt.executeUpdate(sqlPerson);
-                stmt.execute(sqlBimestre_trigger);
                 stmt.execute(sql_Insert_person);
+                stmt.execute(sqlBimestre_trigger);
                 stmt.close();
                 c.close();
 
