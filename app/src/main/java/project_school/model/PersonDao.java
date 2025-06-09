@@ -51,8 +51,9 @@ public class PersonDao {
         }
     }
 
-    public List<Aluno> listarAlunos() {
+    public List<Aluno> listarPerson() {
         List<Aluno> alunos = new ArrayList<>();
+        Bimestres bi = new Bimestres();
         String sql = "SELECT " +
                 "person.id AS Alunos_id, " +
                 "person.name, " +
@@ -79,9 +80,15 @@ public class PersonDao {
                 for (Bimestres b : notas) {
                     notasSt.append(String.format("[%.2f,%.2f,%.2f]", b.getNota1(), b.getNota2(), b.getNota3()));
                 }
-                System.out.printf(
-                        "\n ID:%-5d|NOME:%-20s|CURSO:%-15s|ID_BIMESTRE:%-5d|IDENTIFICAÇÃO:%-20s|NOTAS:%-15s%n",
-                        id, nome, curso, bimestreId, identificacao, notasSt.toString().trim());
+                if (identificacao.equals("PROFESSOR")) {
+                    System.out.printf(
+                            "\n ID:%-5d|NOME:%-20s|CURSO:%-15s|IDENTIFICAÇÃO:%-20s",
+                            id, nome, curso, identificacao);
+                } else {
+                    System.out.printf(
+                            "\n ID:%-5d|NOME:%-20s|CURSO:%-15s|ID_BIMESTRE:%-5d|IDENTIFICAÇÃO:%-20s|DESCRIÇÃO:%-20S|NOTAS:%-15s%n",
+                            id, nome, curso, bimestreId, identificacao, bi.getDescricao(), notasSt.toString().trim());
+                }
             }
             conexao.close();
         } catch (SQLException e) {
@@ -131,7 +138,25 @@ public class PersonDao {
 
     public void inserirNotasViaConsole() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Qual o id do aluno que queira adicionar a nota");
+        System.out.println("Qual o nome do aluno que queira adicionar a nota");
+        String nome_aluno = sc.nextLine();
+        System.out.println("A nota de qual bimestre será atribuída?");
+        int nota_atribuir = sc.nextInt();
+        String notaGeral = "notas" + nota_atribuir;
+        System.out.println("qual valor da nota");
+        int nota_dada = sc.nextInt();
         sc.close();
+      String colunaNota = "NOTAS"+nota_atribuir;
+      String sql = "UPDATE BIMESTRES SET "+ colunaNota +" = ? WHERE PERSON_ID_B = (SELECT ID FROM PERSON WHERE NAME = ?)";
+
+      
+      try(PreparedStatement stmt = conexao.prepareStatement(sql)){
+        stmt.setInt(1, nota_dada);
+        stmt.setString(2, nome_aluno);
+        stmt.executeUpdate();
+      }  catch (Exception e) {
+            System.out.println(e);
+        }
+
     }
 }

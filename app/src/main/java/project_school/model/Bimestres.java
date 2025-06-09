@@ -29,6 +29,8 @@ public class Bimestres {
         return nota3;
     }
 
+    
+
     @Override
     public String toString() {
         return "Bimestre{" +
@@ -37,5 +39,9 @@ public class Bimestres {
                 ", nota3=" + nota3 +
                 ", descricao='" + descricao + '\'' +
                 '}';
+    }
+
+    public String getDescricao() {
+        return descricao;
     }
 }
