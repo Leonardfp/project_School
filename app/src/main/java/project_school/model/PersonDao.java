@@ -53,35 +53,43 @@ public class PersonDao {
 
     public List<Aluno> listarAlunos() {
         List<Aluno> alunos = new ArrayList<>();
-        String sql = "SELECT * FROM PERSON";
+        String sql = "SELECT " +
+                "person.id AS Alunos_id, " +
+                "person.name, " +
+                "person.course, " +
+                "person.identification, " +
+                "BIMESTRES.id AS bimestre_id, " +
+                "BIMESTRES.DESCRICAO, " +
+                "BIMESTRES.NOTAS1, BIMESTRES.NOTAS2, BIMESTRES.NOTAS3 " +
+                "FROM PERSON " +
+                "LEFT JOIN BIMESTRES ON BIMESTRES.PERSON_ID_B = PERSON.id ";
         try {
             PreparedStatement stmt = conexao.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
-                int id = rs.getInt("ID");
-                String nome = rs.getString("NAME");
-                int idade = rs.getInt("AGE");
-                String curso = rs.getString("COURSE");
-                int bimestreId = rs.getInt("BIMESTRE_ID");
+                int id = rs.getInt("Alunos_id");
+                String nome = rs.getString("name");
+                String curso = rs.getString("course");
+                int bimestreId = rs.getInt("bimestre_id");
                 String identificacao = rs.getString("IDENTIFICATION");
                 List<Bimestres> notas = buscBimestres(bimestreId);
-                Aluno aluno = new Aluno(id, nome, idade, curso,bimestreId, notas, identificacao);
+                Aluno aluno = new Aluno(id, nome, curso, bimestreId, identificacao);
                 alunos.add(aluno);
                 StringBuilder notasSt = new StringBuilder();
                 for (Bimestres b : notas) {
                     notasSt.append(String.format("[%.2f,%.2f,%.2f]", b.getNota1(), b.getNota2(), b.getNota3()));
                 }
                 System.out.printf(
-                        "\n ID: %-5d|NOME: %-20s|IDADE: %-5d|ID_BIMESTRE: %-5d|CURSO: %-15s|IDENTIFICAÇÃO: %-20s|NOTAS: %-15s%n",
-                        id, nome, idade, bimestreId, curso, identificacao, notasSt.toString().trim());
+                        "\n ID:%-5d|NOME:%-20s|CURSO:%-15s|ID_BIMESTRE:%-5d|IDENTIFICAÇÃO:%-20s|NOTAS:%-15s%n",
+                        id, nome, curso, bimestreId, identificacao, notasSt.toString().trim());
             }
-             conexao.close();
+            conexao.close();
         } catch (SQLException e) {
             System.out.println(e);
         }
-        
+
         return alunos;
-        
+
     }
 
     public List<Bimestres> buscBimestres(int bimestreId) {
@@ -116,7 +124,7 @@ public class PersonDao {
         String curso = sc.nextLine();
         System.out.println("Identificação ALUNO/PROFESSOR");
         String identificacao = sc.nextLine();
-        Aluno aluno = new Aluno(0, nome, idade, curso,0, new ArrayList<>(), identificacao);
+        Aluno aluno = new Aluno(0, nome, idade, curso, 0, new ArrayList<>(), identificacao);
         adicionarAluno(aluno);
         sc.close();
     }

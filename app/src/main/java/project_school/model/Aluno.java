@@ -18,6 +18,12 @@ public class Aluno {
         this.notas = notas;
         this.identification = identification;
     }
+    public Aluno(int id, String name,  String curso,int bimestreId, String identification){
+        this.curso = curso;
+        this.name = name;
+        this.bimestreId = bimestreId;
+        this.identification = identification;
+    }
 
     @Override
     public String toString() {

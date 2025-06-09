@@ -50,17 +50,15 @@ public class ConexaoSingleton {
                         "NOTAS1 DECIMAL CHECK (NOTAS1 >=0 AND NOTAS1 <=10)," +
                         "NOTAS2 DECIMAL CHECK (NOTAS2 >=0 AND NOTAS2 <=10)," +
                         "NOTAS3 DECIMAL CHECK (NOTAS3 >=0 AND NOTAS3 <=10)," +
-                        "DESCRICAO VARCHAR(50) NOT NULL," +
+                        "DESCRICAO VARCHAR(50)," +
                         "PERSON_ID_B INTEGER," +
                         "FOREIGN KEY (PERSON_ID_B) REFERENCES PERSON(id));";
                 String sqlPerson = "CREATE TABLE IF NOT EXISTS PERSON (" +
                         "ID INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL," +
                         "NAME VARCHAR(100) NOT NULL," +
-                        "AGE INT CHECK (AGE >= 0 AND AGE <=99) NOT NULL," +
+                        "AGE INTEGER CHECK (AGE >= 0 AND AGE <=99) NOT NULL," +
                         "COURSE VARCHAR(40) NOT NULL," +
-                        "BIMESTRE_ID INTEGER," +
-                        "IDENTIFICATION VARCHAR(20) NOT NULL CHECK (IDENTIFICATION IN('ALUNO','PROFESSOR'))," +
-                        "FOREIGN KEY (BIMESTRE_ID) REFERENCES BIMESTRE(ID));";
+                        "IDENTIFICATION VARCHAR(20) NOT NULL CHECK (IDENTIFICATION IN('ALUNO','PROFESSOR')))";
                 String sqlBimestre_trigger = "CREATE TRIGGER SET_DESCRICAO_BIMESTRE" +
                         "AFTER INSERT ON BIMESTRES " +
                         "FOR EACH ROW " +
@@ -71,17 +69,16 @@ public class ConexaoSingleton {
                         "WHEN NEW.NOTAS1 > 0 AND NEW.NOTAS2 >=0 AND NEW.NOTAS3 = 0 THEN 'SEGUNDO BIMESTRE' " +
                         "WHEN NEW.NOTAS1 > 0 AND NEW.NOTAS2 > 0 AND NEW.NOTAS3 >= 0 THEN 'TERCEIRO BIMESTRE' " +
                         "WHEN NEW.NOTAS1 > 0 AND NEW.NOTAS2 > 0 AND NEW.NOTAS3 > 0 THEN 'TERCEIRO BIMESTRE ' " +
+                        "ELSE 'INDEFINIDO' "+
                         "END " +
                         "WHERE ID = NEW.ID; " +
                         "END;";
-                String sql_Insert_person = "DROP TRIGGER IF EXISTS after_insert_person;" +
-                        "CREATE TRIGGER after_insert_person" +
-                        "AFTER INSERT ON PERSON" +
-                        "FOR EACH ROW" +
-                        "BEGIN" +
-                        "IF NEW.IDENTIFICATION ='ALUNO' THEN" +
-                        "INSERT INTO BIMESTRES (PERSON_ID_B) VALUES (NEW.ID);" +
-                        "END IF;" +
+                String sql_Insert_person = "DROP TRIGGER IF EXISTS after_insert_person; " +
+                        "CREATE TRIGGER after_insert_person " +
+                        "AFTER INSERT ON PERSON " +
+                        "WHEN NEW.IDENTIFICATION ='ALUNO' " +
+                        "BEGIN " +
+                        "INSERT INTO BIMESTRES (PERSON_ID_B) VALUES (NEW.ID); " +
                         "END;";
 
                 // "CREATE TRIGGER after_insert_person " +
@@ -93,8 +90,8 @@ public class ConexaoSingleton {
                 stmt.executeUpdate(sqlBimestre);
                 stmt.executeUpdate(sqlSchool);
                 stmt.executeUpdate(sqlPerson);
-                stmt.execute(sql_Insert_person);
-                stmt.execute(sqlBimestre_trigger);
+                stmt.executeUpdate(sql_Insert_person);
+                stmt.executeUpdate(sqlBimestre_trigger);
                 stmt.close();
                 c.close();
 
