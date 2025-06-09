@@ -59,15 +59,14 @@ public class ConexaoSingleton {
                         "AGE INTEGER CHECK (AGE >= 0 AND AGE <=99) NOT NULL," +
                         "COURSE VARCHAR(40) NOT NULL," +
                         "IDENTIFICATION VARCHAR(20) NOT NULL CHECK (IDENTIFICATION IN('ALUNO','PROFESSOR')))";
-                String sqlBimestre_trigger = "CREATE TRIGGER SET_DESCRICAO_BIMESTRE" +
-                        "AFTER INSERT ON BIMESTRES " +
+                String sqlBimestre_trigger = "CREATE TRIGGER SET_DESCRICAO_BIMESTRE " +
+                        "AFTER  INSERT ON BIMESTRES " +
                         "FOR EACH ROW " +
                         "BEGIN " +
                         "UPDATE BIMESTRES " +
                         "SET DESCRICAO = CASE " +
-                        "WHEN NEW.NOTAS1 >=0 AND NEW.NOTAS2 = 0 AND NEW.NOTAS3 = 0 THEN 'PRIMEIRO BIMESTRE' " +
+                        "WHEN NEW.NOTAS1 > 0 AND NEW.NOTAS2 = 0 AND NEW.NOTAS3 = 0 THEN 'PRIMEIRO BIMESTRE' " +
                         "WHEN NEW.NOTAS1 > 0 AND NEW.NOTAS2 >=0 AND NEW.NOTAS3 = 0 THEN 'SEGUNDO BIMESTRE' " +
-                        "WHEN NEW.NOTAS1 > 0 AND NEW.NOTAS2 > 0 AND NEW.NOTAS3 >= 0 THEN 'TERCEIRO BIMESTRE' " +
                         "WHEN NEW.NOTAS1 > 0 AND NEW.NOTAS2 > 0 AND NEW.NOTAS3 > 0 THEN 'TERCEIRO BIMESTRE ' " +
                         "ELSE 'INDEFINIDO' "+
                         "END " +
@@ -80,13 +79,6 @@ public class ConexaoSingleton {
                         "BEGIN " +
                         "INSERT INTO BIMESTRES (PERSON_ID_B) VALUES (NEW.ID); " +
                         "END;";
-
-                // "CREATE TRIGGER after_insert_person " +
-                // "AFTER INSERT ON PERSON " +
-                // "WHEN NEW.IDENTIFICATION = 'ALUNO' " +
-                // "BEGIN " +
-                // "INSERT INTO BIMESTRES(PERSON_ID_B) VALUES (NEW.ID); " +
-                // "END;";
                 stmt.executeUpdate(sqlBimestre);
                 stmt.executeUpdate(sqlSchool);
                 stmt.executeUpdate(sqlPerson);

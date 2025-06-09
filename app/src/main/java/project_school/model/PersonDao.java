@@ -34,26 +34,9 @@ public class PersonDao {
         }
     }
 
-    public void adicionarNotas(Aluno aluno) {
-        // fazer verificação antes para saber qual aluno tera a tabela preenchida com o
-        // id;
-        String sql = "INSERT INTO BIMESTRES(NOTAS1,NOTAS2,NOTAS3) VALUES (?,?,?)";
-        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
-            for (Bimestres bimestre : aluno.notas) {
-                stmt.setDouble(1, bimestre.getNota1());
-                stmt.setDouble(2, bimestre.getNota2());
-                stmt.setDouble(3, bimestre.getNota3());
-                stmt.addBatch();
-            }
-            stmt.executeBatch();
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
 
     public List<Aluno> listarPerson() {
         List<Aluno> alunos = new ArrayList<>();
-        Bimestres bi = new Bimestres();
         String sql = "SELECT " +
                 "person.id AS Alunos_id, " +
                 "person.name, " +
@@ -73,6 +56,7 @@ public class PersonDao {
                 String curso = rs.getString("course");
                 int bimestreId = rs.getInt("bimestre_id");
                 String identificacao = rs.getString("IDENTIFICATION");
+                String descricao = rs.getString("descricao");
                 List<Bimestres> notas = buscBimestres(bimestreId);
                 Aluno aluno = new Aluno(id, nome, curso, bimestreId, identificacao);
                 alunos.add(aluno);
@@ -87,7 +71,7 @@ public class PersonDao {
                 } else {
                     System.out.printf(
                             "\n ID:%-5d|NOME:%-20s|CURSO:%-15s|ID_BIMESTRE:%-5d|IDENTIFICAÇÃO:%-20s|DESCRIÇÃO:%-20S|NOTAS:%-15s%n",
-                            id, nome, curso, bimestreId, identificacao, bi.getDescricao(), notasSt.toString().trim());
+                            id, nome, curso, bimestreId, identificacao,descricao, notasSt.toString().trim());
                 }
             }
             conexao.close();
@@ -138,11 +122,10 @@ public class PersonDao {
 
     public void inserirNotasViaConsole() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Qual o nome do aluno que queira adicionar a nota");
+        System.out.println("Qual o nome do aluno que queira adicionar a nota"); // inserir modelo de verificar para inserir com alunos de nomes repetidos
         String nome_aluno = sc.nextLine();
         System.out.println("A nota de qual bimestre será atribuída?");
         int nota_atribuir = sc.nextInt();
-        String notaGeral = "notas" + nota_atribuir;
         System.out.println("qual valor da nota");
         int nota_dada = sc.nextInt();
         sc.close();
