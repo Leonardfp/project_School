@@ -13,14 +13,5 @@ public class verify {
         }
     }
 
-   public static boolean isNumeric(int valor){
-        try{
-            Integer.toString(valor);
-            return (true);
-        }
-        catch (NumberFormatException e)
-        {
-            return false;
-        }
-    }
+
 }
