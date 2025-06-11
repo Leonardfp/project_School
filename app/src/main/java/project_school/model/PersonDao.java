@@ -127,15 +127,13 @@ public class PersonDao {
         }
         System.out.println("Identificação ALUNO/PROFESSOR");
         String identificacao = sc.nextLine().toUpperCase();
-        while(verify.isNumeric(identificacao)||!identificacao.equalsIgnoreCase("professor") || !identificacao.equalsIgnoreCase("aluno")){
+        while(verify.isNumeric(identificacao)){
             System.out.println("Identificação incorreta, forneça as informações novamente!");
             identificacao = sc.nextLine().toUpperCase();
         }
 
-         Aluno aluno = new Aluno(0, nome, Integer.parseInt(idade), curso, 0, new ArrayList<>(), identificacao);
-         adicionarAluno(aluno); 
-        
-       
+        Aluno aluno = new Aluno(0, nome, Integer.parseInt(idade), curso, 0, new ArrayList<>(), identificacao);
+        adicionarAluno(aluno);
         sc.close();
     }
 
