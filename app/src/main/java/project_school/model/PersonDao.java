@@ -109,29 +109,16 @@ public class PersonDao {
         Scanner sc = new Scanner(System.in);
         System.out.println("Nome: ");
         String nome = sc.nextLine();
-        while (nome == "" || verify.isNumeric(nome) == true) {
-            System.out.println("Incorreto verifique e coloque o nome que deseja");
-            nome = sc.nextLine();
-        }
+        verify.verification_input_name(nome);
         System.out.println("Idade: ");
         String idade = sc.nextLine();
-        while (!verify.isNumeric(idade) || Integer.parseInt(idade) < 8 || Integer.parseInt(idade) > 12) {
-            System.out.println("Idade incorreta, forneça as informações novamente!");
-            idade = sc.nextLine();
-        }
+        verify.verification_input_idade(idade);
         System.out.println("Curso:");
         String curso = sc.nextLine();
-        while (verify.isNumeric(curso) || curso == " ") {
-            System.out.println("Curso incorreto, forneça as informações novamente!");
-            curso = sc.nextLine();
-        }
+        verify.verification_input_curso(curso);
         System.out.println("Identificação ALUNO/PROFESSOR");
         String identificacao = sc.nextLine().toUpperCase();
-        while(verify.isNumeric(identificacao)){
-            System.out.println("Identificação incorreta, forneça as informações novamente!");
-            identificacao = sc.nextLine().toUpperCase();
-        }
-
+        verify.verification_input_Identification(identificacao);
         Aluno aluno = new Aluno(0, nome, Integer.parseInt(idade), curso, 0, new ArrayList<>(), identificacao);
         adicionarAluno(aluno);
         sc.close();
@@ -150,7 +137,6 @@ public class PersonDao {
         String colunaNota = "NOTAS" + nota_atribuir;
         String sql = "UPDATE BIMESTRES SET " + colunaNota
                 + " = ? WHERE PERSON_ID_B = (SELECT ID FROM PERSON WHERE NAME = ?)";
-
         try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
             stmt.setInt(1, nota_dada);
             stmt.setString(2, nome_aluno);
