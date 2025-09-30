@@ -15,14 +15,9 @@ import project_school.model.PersonDao;
  */
 public class App {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        ConexaoSingleton.getConexao();
-        // ConexaoSingleton.createTables();
         PersonDao p = new PersonDao();
-        p.inserirAlunoViaConsole();
-        // p.listarPerson(); 
-        // p.inserirNotasViaConsole();
+        ConexaoSingleton.getConexao();
+        p.listarAlunos();
 
-        // CASO EU DECIDA INSERIR DUAS PESSAOS COM O MESMO NOME
-        // O PROGRAMA SÓ PEGA O PRIMEIRO NOME QUE ELE ACHA (FAZER VALIDAÇÃO DE NOME)
     }
 }

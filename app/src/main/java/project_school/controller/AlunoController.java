@@ -1,4 +1,5 @@
 package project_school.controller;
+
 import java.sql.SQLException;
 import java.util.List;
 
@@ -12,8 +13,8 @@ public class AlunoController {
       this.alunoDao = new PersonDao();
    }
 
-   public void adicionarAluno(String nome, int idade, String curso,float nota, int bimestre) {
-      Aluno aluno = new Aluno(0, nome, idade, curso,nota,bimestre);
+   public void adicionarAluno(String nome, int idade, String curso, float nota, int bimestre) {
+      Aluno aluno = new Aluno(0, nome, idade, curso, nota, bimestre);
       alunoDao.adicionarAluno(aluno);
    }
 
