@@ -60,14 +60,15 @@ public class ConexaoSingleton {
                         "COURSE VARCHAR(40) NOT NULL," +
                         "IDENTIFICATION VARCHAR(20) NOT NULL CHECK (IDENTIFICATION IN('ALUNO','PROFESSOR')))";
                 String sqlBimestre_trigger = "CREATE TRIGGER SET_DESCRICAO_BIMESTRE " +
-                        "AFTER  INSERT ON BIMESTRES " +
+                        "AFTER INSERT ON BIMESTRES " +
+                        "INSTEAD OF INSERT ON BIMESTRES "+
                         "FOR EACH ROW " +
                         "BEGIN " +
                         "UPDATE BIMESTRES " +
                         "SET DESCRICAO = CASE " +
-                        "WHEN NEW.NOTAS1 > 0 AND NEW.NOTAS2 = 0 AND NEW.NOTAS3 = 0 THEN 'PRIMEIRO BIMESTRE' " +
-                        "WHEN NEW.NOTAS1 > 0 AND NEW.NOTAS2 >=0 AND NEW.NOTAS3 = 0 THEN 'SEGUNDO BIMESTRE' " +
-                        "WHEN NEW.NOTAS1 > 0 AND NEW.NOTAS2 > 0 AND NEW.NOTAS3 > 0 THEN 'TERCEIRO BIMESTRE ' " +
+                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 = NULL AND NEW.NOTAS3 = NULL THEN 'PRIMEIRO BIMESTRE' " +
+                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NOT NULL AND NEW.NOTAS3 = NULL THEN 'SEGUNDO BIMESTRE' " +
+                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NOT NULL AND NEW.NOTAS3 IS NOT NULL THEN 'TERCEIRO BIMESTRE ' " +
                         "ELSE 'INDEFINIDO' "+
                         "END " +
                         "WHERE ID = NEW.ID; " +
@@ -79,8 +80,8 @@ public class ConexaoSingleton {
                         "BEGIN " +
                         "INSERT INTO BIMESTRES (PERSON_ID_B) VALUES (NEW.ID); " +
                         "END;";
-                stmt.executeUpdate(sqlBimestre);
                 stmt.executeUpdate(sqlSchool);
+                stmt.executeUpdate(sqlBimestre);
                 stmt.executeUpdate(sqlPerson);
                 stmt.executeUpdate(sql_Insert_person);
                 stmt.executeUpdate(sqlBimestre_trigger);

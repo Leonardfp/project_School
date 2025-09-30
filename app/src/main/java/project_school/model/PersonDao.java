@@ -1,5 +1,4 @@
 package project_school.model;
-
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -108,13 +107,22 @@ public class PersonDao {
         Scanner sc = new Scanner(System.in);
         System.out.println("Nome: ");
         String nome = sc.nextLine();
+        while (nome == "" || verify.isNumeric(nome) == true) {
+            System.out.println("incorreto retorne, coloque o nome que deseja");
+            nome = sc.nextLine();
+        }
         System.out.println("Idade: ");
         int idade = sc.nextInt();
+        while(idade < 8 || verify.isNumeric(idade) == false){
+        System.out.println("incorreto retorne e preencha a idade corretamente");
+        idade = sc.nextInt();
+        }
         sc.nextLine();
         System.out.println("Curso:");
         String curso = sc.nextLine();
         System.out.println("Identificação ALUNO/PROFESSOR");
         String identificacao = sc.nextLine();
+        
         Aluno aluno = new Aluno(0, nome, idade, curso, 0, new ArrayList<>(), identificacao);
         adicionarAluno(aluno);
         sc.close();
@@ -142,4 +150,6 @@ public class PersonDao {
         }
 
     }
+
+    
 }
