@@ -6,7 +6,6 @@ import java.sql.SQLException;
 
 public class ConexaoSingleton {
     private static Connection conexao;
-
     // private static final String URL ="";
     // private static final String USUARIO = "";
     // private static final String SENHA="";
@@ -60,14 +59,13 @@ public class ConexaoSingleton {
                         "COURSE VARCHAR(40) NOT NULL," +
                         "IDENTIFICATION VARCHAR(20) NOT NULL CHECK (IDENTIFICATION IN('ALUNO','PROFESSOR')))";
                 String sqlBimestre_trigger = "CREATE TRIGGER SET_DESCRICAO_BIMESTRE " +
-                        "AFTER INSERT ON BIMESTRES " +
-                        "INSTEAD OF INSERT ON BIMESTRES "+
+                        "AFTER UPDATE OF NOTAS1,NOTAS2,NOTES3 ON BIMESTRES " +
                         "FOR EACH ROW " +
                         "BEGIN " +
                         "UPDATE BIMESTRES " +
                         "SET DESCRICAO = CASE " +
-                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 = NULL AND NEW.NOTAS3 = NULL THEN 'PRIMEIRO BIMESTRE' " +
-                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NOT NULL AND NEW.NOTAS3 = NULL THEN 'SEGUNDO BIMESTRE' " +
+                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NULL AND NEW.NOTAS3 IS NULL THEN 'PRIMEIRO BIMESTRE' " +
+                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NOT NULL AND NEW.NOTAS3 IS NULL THEN 'SEGUNDO BIMESTRE' " +
                         "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NOT NULL AND NEW.NOTAS3 IS NOT NULL THEN 'TERCEIRO BIMESTRE ' " +
                         "ELSE 'INDEFINIDO' "+
                         "END " +

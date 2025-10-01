@@ -1,0 +1,10 @@
+app/src/main/java/project_school/App.java
+app/src/main/java/project_school/controller/AlunoController.java
+app/src/main/java/project_school/view/AlunoView.java
+app/src/main/java/project_school/model/PersonDao.java
+app/src/main/java/project_school/model/Professor.java
+app/src/main/java/project_school/model/verify.java
+app/src/main/java/project_school/model/Person.java
+app/src/main/java/project_school/model/Aluno.java
+app/src/main/java/project_school/model/ConexaoSingleton.java
+app/src/main/java/project_school/model/Bimestres.java

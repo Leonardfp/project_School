@@ -13,11 +13,11 @@ public class AlunoController {
    }
 
    public void adicionarAluno(String nome, int idade, String curso,float nota, int bimestre) {
-      Aluno aluno = new Aluno(0, nome, idade, curso,nota,bimestre);
-      alunoDao.adicionarAluno(aluno);
+      // Aluno aluno = new Aluno(0, nome, idade, curso,nota,bimestre);
+      // alunoDao.adicionarAluno(aluno);
    }
 
-   public List<Aluno> listarAlunos() {
-      return alunoDao.listarAlunos();
-   }
+   // public List<Aluno> listarAlunos() {
+   //    return alunoDao.listarAlunos();
+   // }
 }

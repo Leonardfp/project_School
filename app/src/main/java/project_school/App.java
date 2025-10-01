@@ -4,7 +4,7 @@ package project_school;
 import java.sql.SQLException;
 
 import project_school.model.ConexaoSingleton;
-import project_school.model.PersonDao;
+// import project_school.model.PersonDao;
 
 /*
  Conexao com o banco OK
