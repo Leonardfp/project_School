@@ -1,4 +1,5 @@
 package project_school.model;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -32,7 +33,6 @@ public class PersonDao {
             e.printStackTrace();
         }
     }
-
 
     public List<Aluno> listarPerson() {
         List<Aluno> alunos = new ArrayList<>();
@@ -70,7 +70,7 @@ public class PersonDao {
                 } else {
                     System.out.printf(
                             "\n ID:%-5d|NOME:%-20s|CURSO:%-15s|ID_BIMESTRE:%-5d|IDENTIFICAÇÃO:%-20s|DESCRIÇÃO:%-20S|NOTAS:%-15s%n",
-                            id, nome, curso, bimestreId, identificacao,descricao, notasSt.toString().trim());
+                            id, nome, curso, bimestreId, identificacao, descricao, notasSt.toString().trim());
                 }
             }
             conexao.close();
@@ -113,16 +113,16 @@ public class PersonDao {
         }
         System.out.println("Idade: ");
         int idade = sc.nextInt();
-        while(idade < 8 || verify.isNumeric(idade) == false){
-        System.out.println("incorreto retorne e preencha a idade corretamente");
-        idade = sc.nextInt();
+        while (idade < 8 || verify.isNumeric(idade) == false) {
+            System.out.println("incorreto retorne e preencha a idade corretamente");
+            idade = sc.nextInt();
         }
         sc.nextLine();
         System.out.println("Curso:");
         String curso = sc.nextLine();
         System.out.println("Identificação ALUNO/PROFESSOR");
         String identificacao = sc.nextLine();
-        
+
         Aluno aluno = new Aluno(0, nome, idade, curso, 0, new ArrayList<>(), identificacao);
         adicionarAluno(aluno);
         sc.close();
@@ -130,26 +130,26 @@ public class PersonDao {
 
     public void inserirNotasViaConsole() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Qual o nome do aluno que queira adicionar a nota"); // inserir modelo de verificar para inserir com alunos de nomes repetidos
+        System.out.println("Qual o nome do aluno que queira adicionar a nota"); // inserir modelo de verificar para
+                                                                                // inserir com alunos de nomes repetidos
         String nome_aluno = sc.nextLine();
         System.out.println("A nota de qual bimestre será atribuída?");
         int nota_atribuir = sc.nextInt();
         System.out.println("qual valor da nota");
         int nota_dada = sc.nextInt();
         sc.close();
-      String colunaNota = "NOTAS"+nota_atribuir;
-      String sql = "UPDATE BIMESTRES SET "+ colunaNota +" = ? WHERE PERSON_ID_B = (SELECT ID FROM PERSON WHERE NAME = ?)";
+        String colunaNota = "NOTAS" + nota_atribuir;
+        String sql = "UPDATE BIMESTRES SET " + colunaNota
+                + " = ? WHERE PERSON_ID_B = (SELECT ID FROM PERSON WHERE NAME = ?)";
 
-      
-      try(PreparedStatement stmt = conexao.prepareStatement(sql)){
-        stmt.setInt(1, nota_dada);
-        stmt.setString(2, nome_aluno);
-        stmt.executeUpdate();
-      }  catch (Exception e) {
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            stmt.setInt(1, nota_dada);
+            stmt.setString(2, nome_aluno);
+            stmt.executeUpdate();
+        } catch (Exception e) {
             System.out.println(e);
         }
 
     }
 
-    
 }

@@ -24,7 +24,12 @@ public class Aluno {
         this.bimestreId = bimestreId;
         this.identification = identification;
     }
-
+ public Aluno(int id, String name, int idade,String curso, String identification){
+        this.curso = curso;
+        this.idade = idade;
+        this.name = name;
+        this.identification = identification;
+    }
     @Override
     public String toString() {
         return "Aluno{" +
