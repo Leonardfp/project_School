@@ -41,9 +41,10 @@ public class PersonDao {
                 "person.identification, " +
                 "BIMESTRES.id AS bimestre_id, " +
                 "BIMESTRES.DESCRICAO, " +
-                "BIMESTRES.NOTAS1, BIMESTRES.NOTAS2, BIMESTRES.NOTAS3 " +
+                "BIMESTRES.NOTAS1, BIMESTRES.NOTAS2, BIMESTRES.NOTAS3, BIMESTRES.MEDIA, " +
+                "BIMESTRES.SITUACAO "+
                 "FROM PERSON " +
-                "LEFT JOIN BIMESTRES ON BIMESTRES.PERSON_ID_B = PERSON.id ";
+                "LEFT JOIN BIMESTRES";
         try {
             PreparedStatement stmt = conexao.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
@@ -55,6 +56,8 @@ public class PersonDao {
                 String identificacao = rs.getString("IDENTIFICATION");
                 String descricao = rs.getString("descricao");
                 List<Bimestres> notas = buscBimestres(bimestreId);
+                double media = rs.getDouble("media");
+                String situacao = rs.getString("situacao");
                 Aluno aluno = new Aluno(id, nome, curso, bimestreId, identificacao);
                 alunos.add(aluno);
                 StringBuilder notasSt = new StringBuilder();
@@ -67,8 +70,8 @@ public class PersonDao {
                             id, nome, curso, identificacao);
                 } else {
                     System.out.printf(
-                            "\n ID:%-5d|NOME:%-20s|CURSO:%-15s|ID_BIMESTRE:%-5d|IDENTIFICAÇÃO:%-20s|DESCRIÇÃO:%-20S|NOTAS:%-15s%n",
-                            id, nome, curso, bimestreId, identificacao, descricao, notasSt.toString().trim());
+                            "\n ID:%-3d|NOME:%-14s|CURSO:%-12s|IDENTIFICAÇÃO:%-9s|DESCRIÇÃO:%-18S|NOTAS:%-15s%n|Média:%-15s%n|Situacao:%-14S",
+                            id, nome, curso, identificacao, descricao, notasSt.toString().trim(),media,situacao);
                 }
             }
             conexao.close();
@@ -120,17 +123,16 @@ public class PersonDao {
         String curso = sc.nextLine();
         System.out.println("Identificação ALUNO/PROFESSOR");
         String identificacao = sc.nextLine();
-
         Aluno aluno = new Aluno(0, nome, idade, curso, 0, new ArrayList<>(), identificacao);
         adicionarAluno(aluno);
-        sc.close();
+
     }
 
     public void inserirNotasViaConsole() {
         Scanner sc = new Scanner(System.in);
         System.out.println("Qual o nome do aluno que queira adicionar a nota");
-         // inserir modelo de verificar para
-        String nome_aluno = sc.nextLine().hashCode()+"";
+        // inserir modelo de verificar para
+        String nome_aluno = sc.nextLine();
         System.out.println("A nota de qual bimestre será atribuída?");
         int nota_atribuir = sc.nextInt();
         System.out.println("qual valor da nota");
