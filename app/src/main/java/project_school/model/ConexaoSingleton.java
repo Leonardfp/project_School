@@ -49,6 +49,8 @@ public class ConexaoSingleton {
                         "NOTAS1 DECIMAL CHECK (NOTAS1 >=0 AND NOTAS1 <=10)," +
                         "NOTAS2 DECIMAL CHECK (NOTAS2 >=0 AND NOTAS2 <=10)," +
                         "NOTAS3 DECIMAL CHECK (NOTAS3 >=0 AND NOTAS3 <=10)," +
+                        "MEDIA DECIMAL CHECK (MEDIA >=0 AND MEDIA <=24)," +
+                        "SITUACAO VARCHAR(20) CHECK (SITUACAO IN('APROVADO','REPROVADO','RECUPERAÇÃO'))," +
                         "DESCRICAO VARCHAR(50)," +
                         "PERSON_ID_B INTEGER," +
                         "FOREIGN KEY (PERSON_ID_B) REFERENCES PERSON(id));";

@@ -8,11 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-//Criar regra de negocio para verificação de aluno e professor ROLES
+//Criar regra de negocio para verificação de aluno e professor ROLES --Ok
 /* como vo criar um sistema de notas durante as 3 notas?
-soluções: posso criar um unico sistema onde armazeno somente a média ou seja conforme vai adicionando
-as notas vai fazendo a média automaticamente. 
-solução2: criar tabelas de bimestres e distribuir as notas nela e puxar no backend e trazer somente a média (dará no mesmo)
+ ----- (Basicamente posso fazer os calculos e adicionar em uma nova tabela). 
 */
 public class PersonDao {
     private Connection conexao;
@@ -130,9 +128,9 @@ public class PersonDao {
 
     public void inserirNotasViaConsole() {
         Scanner sc = new Scanner(System.in);
-        System.out.println("Qual o nome do aluno que queira adicionar a nota"); // inserir modelo de verificar para
-                                                                                // inserir com alunos de nomes repetidos
-        String nome_aluno = sc.nextLine();
+        System.out.println("Qual o nome do aluno que queira adicionar a nota");
+         // inserir modelo de verificar para
+        String nome_aluno = sc.nextLine().hashCode()+"";
         System.out.println("A nota de qual bimestre será atribuída?");
         int nota_atribuir = sc.nextInt();
         System.out.println("qual valor da nota");
@@ -150,6 +148,21 @@ public class PersonDao {
             System.out.println(e);
         }
 
+    }
+
+    public void inserir_media_situacao(int bimestreId) {
+        String sql = "UPDATE BIMESTRES SET MEDIA = ?, SITUACAO = ? WHERE ID = ?";
+        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
+            Bimestres bimestre = buscBimestres(bimestreId).get(0);
+            double media = bimestre.media_Notas();
+            String situacao = bimestre.situacao_Aluno();
+            stmt.setDouble(1, media);
+            stmt.setString(2, situacao);
+            stmt.setInt(3, bimestreId);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 
 }

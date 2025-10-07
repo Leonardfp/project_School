@@ -5,6 +5,7 @@ public class Bimestres {
     private double nota2;
     private double nota3;
     private String descricao;
+    
 
     public Bimestres(double nota1, double nota2, double nota3, String descricao) {
         this.nota1 = nota1;
@@ -29,8 +30,6 @@ public class Bimestres {
         return nota3;
     }
 
-    
-
     @Override
     public String toString() {
         return "Bimestre{" +
@@ -43,5 +42,23 @@ public class Bimestres {
 
     public String getDescricao() {
         return descricao;
+    }
+
+    public double media_Notas() {
+        double valor_total = nota1 + nota2 + nota3;
+        valor_total = (nota1 + nota2 + nota3) / 3;
+        return valor_total;
+    }
+    public String situacao_Aluno() {
+        String situacao;
+        double media = media_Notas();
+        if (media >= 7) {
+            situacao = "APROVADO";
+        } else if (media >= 5) {
+            situacao = "RECUPERAÇÃO";
+        } else {
+            situacao = "REPROVADO";
+        }
+        return situacao;
     }
 }
