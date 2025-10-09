@@ -6,6 +6,7 @@ import java.sql.SQLException;
 
 public class ConexaoSingleton {
     private static Connection conexao;
+
     // private static final String URL ="";
     // private static final String USUARIO = "";
     // private static final String SENHA="";
@@ -66,10 +67,13 @@ public class ConexaoSingleton {
                         "BEGIN " +
                         "UPDATE BIMESTRES " +
                         "SET DESCRICAO = CASE " +
-                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NULL AND NEW.NOTAS3 IS NULL THEN 'PRIMEIRO BIMESTRE' " +
-                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NOT NULL AND NEW.NOTAS3 IS NULL THEN 'SEGUNDO BIMESTRE' " +
-                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NOT NULL AND NEW.NOTAS3 IS NOT NULL THEN 'TERCEIRO BIMESTRE ' " +
-                        "ELSE 'INDEFINIDO' "+
+                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NULL AND NEW.NOTAS3 IS NULL THEN 'PRIMEIRO BIMESTRE' "
+                        +
+                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NOT NULL AND NEW.NOTAS3 IS NULL THEN 'SEGUNDO BIMESTRE' "
+                        +
+                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NOT NULL AND NEW.NOTAS3 IS NOT NULL THEN 'TERCEIRO BIMESTRE ' "
+                        +
+                        "ELSE 'INDEFINIDO' " +
                         "END " +
                         "WHERE ID = NEW.ID; " +
                         "END;";

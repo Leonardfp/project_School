@@ -52,7 +52,7 @@ public class Bimestres {
     public String situacao_Aluno() {
         String situacao;
         double media = media_Notas();
-        if (media >= 7) {
+        if (media >= 6) {
             situacao = "APROVADO";
         } else if (media >= 5) {
             situacao = "RECUPERAÇÃO";

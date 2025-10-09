@@ -6,22 +6,27 @@ import java.util.Scanner;
 
 import project_school.model.ConexaoSingleton;
 import project_school.model.PersonDao;
+import project_school.view.AlunoView;
 
 /*
  Conexao com o banco OK
  Criação de tabelas OK
- Inserção de dados
- verificação atraves da regra de negocio (aluno/professor)
+ Inserção de dados OK
+ verificação atraves da regra de negocio (aluno/professor) OK
  estudar swing 
  */
-// CASO EU DECIDA INSERIR DUAS PESSAOS COM O MESMO NOME
-// O PROGRAMA SÓ PEGA O PRIMEIRO NOME QUE ELE ACHA (FAZER VALIDAÇÃO DE NOME)
+ /* verificação de nomes, caso haver nomes iguals o programa irá fazer uma busca
+     no banco de dados e trazer todos nomes e dar a opção de escolher o nome que deseja */
+     //criar RA
 public class App {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         Scanner sc = new Scanner(System.in);
+        PersonDao p = new PersonDao();
+        AlunoView vw = new AlunoView();
+
         ConexaoSingleton.getConexao();
         ConexaoSingleton.createTables();
-        PersonDao p = new PersonDao();
+
         System.out.println("---------------------------------------------------------");
         System.out.println("(1) Inserir Aluno");
         System.out.println("(2) Listar Alunos");
@@ -31,13 +36,13 @@ public class App {
         int value = sc.nextInt();
         switch (value) {
             case 1:
-                p.inserirAlunoViaConsole();
+                vw.inserirAlunoViaConsole();
                 break;
             case 2:
                 p.listarPerson();
                 break;
             case 3:
-                p.inserirNotasViaConsole();
+                vw.inserirNotasViaConsole();
                 break;
             case 4:
                 System.out.println("Qual id do aluno que deseja ?");

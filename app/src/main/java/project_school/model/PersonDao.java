@@ -6,14 +6,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Scanner;
 
 //Criar regra de negocio para verificação de aluno e professor ROLES --Ok
 /* como vo criar um sistema de notas durante as 3 notas?
  ----- (Basicamente posso fazer os calculos e adicionar em uma nova tabela). 
 */
 public class PersonDao {
-    private Connection conexao;
+    public Connection conexao;
 
     public PersonDao() throws ClassNotFoundException, SQLException {
         this.conexao = ConexaoSingleton.getConexao();
@@ -42,7 +41,7 @@ public class PersonDao {
                 "BIMESTRES.id AS bimestre_id, " +
                 "BIMESTRES.DESCRICAO, " +
                 "BIMESTRES.NOTAS1, BIMESTRES.NOTAS2, BIMESTRES.NOTAS3, BIMESTRES.MEDIA, " +
-                "BIMESTRES.SITUACAO "+
+                "BIMESTRES.SITUACAO " +
                 "FROM PERSON " +
                 "LEFT JOIN BIMESTRES";
         try {
@@ -70,8 +69,8 @@ public class PersonDao {
                             id, nome, curso, identificacao);
                 } else {
                     System.out.printf(
-                            "\n ID:%-3d|NOME:%-14s|CURSO:%-12s|IDENTIFICAÇÃO:%-9s|DESCRIÇÃO:%-18S|NOTAS:%-15s%n|Média:%-15s%n|Situacao:%-14S",
-                            id, nome, curso, identificacao, descricao, notasSt.toString().trim(),media,situacao);
+                            "\n ID:%-3d|NOME:%-12s|CURSO:%-12s|IDENTIFICAÇÃO:%-6s|DESCRIÇÃO:%-18S |NOTAS:%-15s%n |Média:%.2f |Situacao:%-11S",
+                            id, nome, curso, identificacao, descricao, notasSt.toString().trim(), media, situacao);
                 }
             }
             conexao.close();
@@ -102,54 +101,6 @@ public class PersonDao {
             e.printStackTrace();
         }
         return bimestres;
-    }
-
-    public void inserirAlunoViaConsole() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Nome: ");
-        String nome = sc.nextLine();
-        while (nome == "" || verify.isNumeric(nome) == true) {
-            System.out.println("incorreto retorne, coloque o nome que deseja");
-            nome = sc.nextLine();
-        }
-        System.out.println("Idade: ");
-        int idade = sc.nextInt();
-        while (idade < 8 || verify.isNumeric(idade) == false) {
-            System.out.println("incorreto retorne e preencha a idade corretamente");
-            idade = sc.nextInt();
-        }
-        sc.nextLine();
-        System.out.println("Curso:");
-        String curso = sc.nextLine();
-        System.out.println("Identificação ALUNO/PROFESSOR");
-        String identificacao = sc.nextLine();
-        Aluno aluno = new Aluno(0, nome, idade, curso, 0, new ArrayList<>(), identificacao);
-        adicionarAluno(aluno);
-
-    }
-
-    public void inserirNotasViaConsole() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("Qual o nome do aluno que queira adicionar a nota");
-        // inserir modelo de verificar para
-        String nome_aluno = sc.nextLine();
-        System.out.println("A nota de qual bimestre será atribuída?");
-        int nota_atribuir = sc.nextInt();
-        System.out.println("qual valor da nota");
-        int nota_dada = sc.nextInt();
-        sc.close();
-        String colunaNota = "NOTAS" + nota_atribuir;
-        String sql = "UPDATE BIMESTRES SET " + colunaNota
-                + " = ? WHERE PERSON_ID_B = (SELECT ID FROM PERSON WHERE NAME = ?)";
-
-        try (PreparedStatement stmt = conexao.prepareStatement(sql)) {
-            stmt.setInt(1, nota_dada);
-            stmt.setString(2, nome_aluno);
-            stmt.executeUpdate();
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-
     }
 
     public void inserir_media_situacao(int bimestreId) {

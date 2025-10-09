@@ -1,6 +1,9 @@
 package project_school.model;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Aluno {
     public int id, idade;
@@ -9,8 +12,13 @@ public class Aluno {
     public List<Bimestres> notas;
     public int bimestreId;
     public String identification;
+    public int ra_Alunos[] = new int[4];
+    Random gr = new Random();
 
-    public Aluno(int id, String name, int idade, String curso,int bimestreId, List<Bimestres> notas, String identification) {
+    
+
+    public Aluno(int id, String name, int idade, String curso, int bimestreId, List<Bimestres> notas,
+            String identification) {
         this.idade = idade;
         this.curso = curso;
         this.name = name;
@@ -18,18 +26,21 @@ public class Aluno {
         this.notas = notas;
         this.identification = identification;
     }
-    public Aluno(int id, String name,  String curso,int bimestreId, String identification){
+
+    public Aluno(int id, String name, String curso, int bimestreId, String identification) {
         this.curso = curso;
         this.name = name;
         this.bimestreId = bimestreId;
         this.identification = identification;
     }
- public Aluno(int id, String name, int idade,String curso, String identification){
+
+    public Aluno(int id, String name, int idade, String curso, String identification) {
         this.curso = curso;
         this.idade = idade;
         this.name = name;
         this.identification = identification;
     }
+
     @Override
     public String toString() {
         return "Aluno{" +
@@ -37,7 +48,7 @@ public class Aluno {
                 ", nome='" + name + '\'' +
                 ", idade=" + idade +
                 ", curso='" + curso + '\'' +
-                ", bimestre_id"+ bimestreId +'\''+
+                ", bimestre_id" + bimestreId + '\'' +
                 ", identificacao='" + identification + '\'' +
                 '}';
     }
