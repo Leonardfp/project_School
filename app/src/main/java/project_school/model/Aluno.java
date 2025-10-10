@@ -1,7 +1,5 @@
 package project_school.model;
 
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -15,8 +13,6 @@ public class Aluno {
     public int ra_Alunos[] = new int[4];
     Random gr = new Random();
 
-    
-
     public Aluno(int id, String name, int idade, String curso, int bimestreId, List<Bimestres> notas,
             String identification) {
         this.idade = idade;
@@ -25,6 +21,7 @@ public class Aluno {
         this.bimestreId = bimestreId;
         this.notas = notas;
         this.identification = identification;
+
     }
 
     public Aluno(int id, String name, String curso, int bimestreId, String identification) {
@@ -52,4 +49,5 @@ public class Aluno {
                 ", identificacao='" + identification + '\'' +
                 '}';
     }
+
 }

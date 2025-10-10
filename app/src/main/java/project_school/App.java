@@ -15,9 +15,7 @@ import project_school.view.AlunoView;
  verificação atraves da regra de negocio (aluno/professor) OK
  estudar swing 
  */
- /* verificação de nomes, caso haver nomes iguals o programa irá fazer uma busca
-     no banco de dados e trazer todos nomes e dar a opção de escolher o nome que deseja */
-     //criar RA
+
 public class App {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
         Scanner sc = new Scanner(System.in);

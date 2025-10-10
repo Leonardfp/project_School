@@ -8,9 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 //Criar regra de negocio para verificação de aluno e professor ROLES --Ok
-/* como vo criar um sistema de notas durante as 3 notas?
- ----- (Basicamente posso fazer os calculos e adicionar em uma nova tabela). 
-*/
+
 public class PersonDao {
     public Connection conexao;
 
@@ -33,7 +31,7 @@ public class PersonDao {
 
     public List<Aluno> listarPerson() {
         List<Aluno> alunos = new ArrayList<>();
-        String sql = "SELECT " +
+        String sql = "SELECT DISTINCT " +
                 "person.id AS Alunos_id, " +
                 "person.name, " +
                 "person.course, " +
@@ -43,7 +41,7 @@ public class PersonDao {
                 "BIMESTRES.NOTAS1, BIMESTRES.NOTAS2, BIMESTRES.NOTAS3, BIMESTRES.MEDIA, " +
                 "BIMESTRES.SITUACAO " +
                 "FROM PERSON " +
-                "LEFT JOIN BIMESTRES";
+                "RIGHT JOIN BIMESTRES ";
         try {
             PreparedStatement stmt = conexao.prepareStatement(sql);
             ResultSet rs = stmt.executeQuery();
@@ -69,7 +67,7 @@ public class PersonDao {
                             id, nome, curso, identificacao);
                 } else {
                     System.out.printf(
-                            "\n ID:%-3d|NOME:%-12s|CURSO:%-12s|IDENTIFICAÇÃO:%-6s|DESCRIÇÃO:%-18S |NOTAS:%-15s%n |Média:%.2f |Situacao:%-11S",
+                            "\n ID:%-3d|NOME:%-12s|CURSO:%-12s|IDENTIFICAÇÃO:%-6s|DESCRIÇÃO:%-18S| NOTAS:%-15s|Média:%.2f |Situacao:%-11S \n",
                             id, nome, curso, identificacao, descricao, notasSt.toString().trim(), media, situacao);
                 }
             }

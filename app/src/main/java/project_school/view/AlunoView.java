@@ -37,8 +37,8 @@ public class AlunoView {
     public void inserirNotasViaConsole() throws ClassNotFoundException, SQLException {
         PersonDao pd = new PersonDao();
         Scanner sc = new Scanner(System.in);
-        System.out.println("Qual o nome do aluno que queira adicionar a nota");
-        String nome_aluno = sc.nextLine();
+        System.out.println("Qual o Ra do aluno que queira adicionar a nota");
+        int id_aluno = sc.nextInt();
         System.out.println("A nota de qual bimestre será atribuída?");
         int nota_atribuir = sc.nextInt();
         if(nota_atribuir != 1 && nota_atribuir != 2 && nota_atribuir != 3){
@@ -50,11 +50,11 @@ public class AlunoView {
         sc.close();
         String colunaNota = "NOTAS" + nota_atribuir;
         String sql = "UPDATE BIMESTRES SET " + colunaNota
-                + " = ? WHERE PERSON_ID_B = (SELECT ID FROM PERSON WHERE NAME = ?)";
-        // pd.inserir_media_situacao();
+                + " = ? WHERE PERSON_ID_B = ?";
+        pd.inserir_media_situacao(id_aluno);
         try (PreparedStatement stmt = pd.conexao.prepareStatement(sql)) {
             stmt.setInt(1, nota_dada);
-            stmt.setString(2, nome_aluno);
+            stmt.setInt(2, id_aluno);
             stmt.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);

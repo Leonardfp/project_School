@@ -46,7 +46,7 @@ public class ConexaoSingleton {
                         "FOREIGN KEY (BIMESTRE_ID) REFERENCES BIMESTRES(ID)" +
                         ");";
                 String sqlBimestre = "CREATE TABLE IF NOT EXISTS BIMESTRES(" +
-                        "ID INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                        "ID_B INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL," +
                         "NOTAS1 DECIMAL CHECK (NOTAS1 >=0 AND NOTAS1 <=10)," +
                         "NOTAS2 DECIMAL CHECK (NOTAS2 >=0 AND NOTAS2 <=10)," +
                         "NOTAS3 DECIMAL CHECK (NOTAS3 >=0 AND NOTAS3 <=10)," +
