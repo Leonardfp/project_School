@@ -41,7 +41,7 @@ public class AlunoView {
         int id_aluno = sc.nextInt();
         System.out.println("A nota de qual bimestre será atribuída?");
         int nota_atribuir = sc.nextInt();
-        if(nota_atribuir != 1 && nota_atribuir != 2 && nota_atribuir != 3){
+        if (nota_atribuir != 1 && nota_atribuir != 2 && nota_atribuir != 3) {
             System.out.println("Invalido entre com bimestre válido [1][2][3]");
             nota_atribuir = sc.nextInt();
         }
@@ -51,7 +51,6 @@ public class AlunoView {
         String colunaNota = "NOTAS" + nota_atribuir;
         String sql = "UPDATE BIMESTRES SET " + colunaNota
                 + " = ? WHERE PERSON_ID_B = ?";
-        pd.inserir_media_situacao(id_aluno);
         try (PreparedStatement stmt = pd.conexao.prepareStatement(sql)) {
             stmt.setInt(1, nota_dada);
             stmt.setInt(2, id_aluno);

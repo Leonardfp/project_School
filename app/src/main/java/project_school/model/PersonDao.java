@@ -14,6 +14,7 @@ public class PersonDao {
 
     public PersonDao() throws ClassNotFoundException, SQLException {
         this.conexao = ConexaoSingleton.getConexao();
+        calcular_medias();
     }
 
     public void adicionarAluno(Aluno aluno) {
@@ -58,6 +59,22 @@ public class PersonDao {
         }
         return professores;
     }
+
+    public List<Bimestres> calcular_medias() throws ClassNotFoundException, SQLException{
+        String sql = "SELECT DISTINCT id from person";
+        List<Bimestres> bimestres = new ArrayList<>();
+        try{
+            PreparedStatement stmt = conexao.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery();
+            while(rs.next()){
+                int id = rs.getInt("id");
+                 inserir_media_situacao(id);
+    }
+        }catch (SQLException e){
+            System.out.println(e);
+        }
+        return bimestres;
+}
 
     public List<Aluno> listarAlunos() {
         List<Aluno> alunos = new ArrayList<>();

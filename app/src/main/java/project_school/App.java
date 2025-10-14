@@ -26,11 +26,10 @@ public class App {
         ConexaoSingleton.createTables();
 
         System.out.println("---------------------------------------------------------");
-        System.out.println("(1) Inserir Aluno");
+        System.out.println("(1) Inserir Pessoa");
         System.out.println("(2) Listar Alunos");
         System.out.println("(3) Listar Professores");
         System.out.println("(4) Inserir Notas");
-        System.out.println("(5) Média Aluno  ");
         System.out.println("---------------------------------------------------------");
         int value = sc.nextInt();
         switch (value) {
@@ -46,12 +45,8 @@ public class App {
             case 4:
                 vw.inserirNotasViaConsole();
                 break;
-            case 5:
-                System.out.println("Qual id do aluno que deseja ?");
-                int val = sc.nextInt();
-                p.inserir_media_situacao(val);
-                break;
             default:
+            System.out.println("Invalido");
                 break;
         }
         sc.close();

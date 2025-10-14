@@ -46,7 +46,7 @@ public class ConexaoSingleton {
                         "FOREIGN KEY (BIMESTRE_ID) REFERENCES BIMESTRES(ID)" +
                         ");";
                 String sqlBimestre = "CREATE TABLE IF NOT EXISTS BIMESTRES(" +
-                        "ID_B INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL," +
+                        "ID INTEGER  PRIMARY KEY AUTOINCREMENT NOT NULL," +
                         "NOTAS1 DECIMAL CHECK (NOTAS1 >=0 AND NOTAS1 <=10)," +
                         "NOTAS2 DECIMAL CHECK (NOTAS2 >=0 AND NOTAS2 <=10)," +
                         "NOTAS3 DECIMAL CHECK (NOTAS3 >=0 AND NOTAS3 <=10)," +
@@ -62,14 +62,14 @@ public class ConexaoSingleton {
                         "COURSE VARCHAR(40) NOT NULL," +
                         "IDENTIFICATION VARCHAR(20) NOT NULL CHECK (IDENTIFICATION IN('ALUNO','PROFESSOR')))";
                 String sqlBimestre_trigger = "CREATE TRIGGER SET_DESCRICAO_BIMESTRE " +
-                        "AFTER UPDATE OF NOTAS1,NOTAS2,NOTES3 ON BIMESTRES " +
+                        "AFTER UPDATE OF NOTAS1,NOTAS2,NOTAS3 ON BIMESTRES " +
                         "FOR EACH ROW " +
                         "BEGIN " +
                         "UPDATE BIMESTRES " +
                         "SET DESCRICAO = CASE " +
-                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NULL AND NEW.NOTAS3 IS NULL THEN 'PRIMEIRO BIMESTRE' "
+                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NULL AND NEW.NOTAS3 IS NULL THEN 'PRIMEIRO BIMESTRE ' "
                         +
-                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NOT NULL AND NEW.NOTAS3 IS NULL THEN 'SEGUNDO BIMESTRE' "
+                        "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NOT NULL AND NEW.NOTAS3 IS NULL THEN 'SEGUNDO BIMESTRE ' "
                         +
                         "WHEN NEW.NOTAS1 IS NOT NULL AND NEW.NOTAS2 IS NOT NULL AND NEW.NOTAS3 IS NOT NULL THEN 'TERCEIRO BIMESTRE ' "
                         +
