@@ -29,21 +29,56 @@ public class PersonDao {
         }
     }
 
-    public List<Aluno> listarPerson() {
-        List<Aluno> alunos = new ArrayList<>();
-        String sql = "SELECT DISTINCT " +
-                "person.id AS Alunos_id, " +
-                "person.name, " +
-                "person.course, " +
-                "person.identification, " +
-                "BIMESTRES.id AS bimestre_id, " +
-                "BIMESTRES.DESCRICAO, " +
-                "BIMESTRES.NOTAS1, BIMESTRES.NOTAS2, BIMESTRES.NOTAS3, BIMESTRES.MEDIA, " +
-                "BIMESTRES.SITUACAO " +
-                "FROM PERSON " +
-                "RIGHT JOIN BIMESTRES ";
+    public List<Professor> listarProfessores() {
+        List<Professor> professores = new ArrayList<>();
+        String sql_P = "SELECT DISTINCT " +
+                "p.id AS Alunos_id, " +
+                "p.name, " +
+                "p.course, " +
+                "p.identification " +
+                "FROM person p WHERE IDENTIFICATION = 'PROFESSOR' ";
         try {
-            PreparedStatement stmt = conexao.prepareStatement(sql);
+            PreparedStatement stmt2 = conexao.prepareStatement(sql_P);
+            ResultSet rs2 = stmt2.executeQuery();
+            while (rs2.next()) {
+                int id = rs2.getInt("Alunos_id");
+                String nome = rs2.getString("name");
+                String curso = rs2.getString("course");
+                String identificacao = rs2.getString("IDENTIFICATION");
+                Professor professor = new Professor(0, nome, curso, identificacao);
+                professores.add(professor);
+
+                System.out.printf(
+                        "\n ID:%-5d|NOME:%-20s|CURSO:%-15s|IDENTIFICAÇÃO:%-20s \n",
+                        id, nome, curso, identificacao);
+            }
+            conexao.close();
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return professores;
+    }
+
+    public List<Aluno> listarAlunos() {
+        List<Aluno> alunos = new ArrayList<>();
+        String sql_a = "SELECT DISTINCT " +
+                "p.id AS Alunos_id, " +
+                "p.name, " +
+                "p.course, " +
+                "p.identification, " +
+                "b.id AS bimestre_id, " +
+                "b.descricao, " +
+                "b.notas1, " +
+                "b.notas2, " +
+                "b.notas3, " +
+                "b.media, " +
+                "b.situacao " +
+                "FROM person p " +
+                "RIGHT JOIN bimestres b " +
+                "ON b.person_id_b = p.id";
+
+        try {
+            PreparedStatement stmt = conexao.prepareStatement(sql_a);
             ResultSet rs = stmt.executeQuery();
             while (rs.next()) {
                 int id = rs.getInt("Alunos_id");
@@ -61,15 +96,11 @@ public class PersonDao {
                 for (Bimestres b : notas) {
                     notasSt.append(String.format("[%.2f,%.2f,%.2f]", b.getNota1(), b.getNota2(), b.getNota3()));
                 }
-                if (identificacao.equals("PROFESSOR")) {
-                    System.out.printf(
-                            "\n ID:%-5d|NOME:%-20s|CURSO:%-15s|IDENTIFICAÇÃO:%-20s",
-                            id, nome, curso, identificacao);
-                } else {
-                    System.out.printf(
-                            "\n ID:%-3d|NOME:%-12s|CURSO:%-12s|IDENTIFICAÇÃO:%-6s|DESCRIÇÃO:%-18S| NOTAS:%-15s|Média:%.2f |Situacao:%-11S \n",
-                            id, nome, curso, identificacao, descricao, notasSt.toString().trim(), media, situacao);
-                }
+
+                System.out.printf(
+                        "\n ID:%-3d|NOME:%-12s|CURSO:%-12s|IDENTIFICAÇÃO:%-6s|DESCRIÇÃO:%-18S| NOTAS:%-15s|Média:%.2f |Situacao:%-11S \n",
+                        id, nome, curso, identificacao, descricao, notasSt.toString().trim(), media, situacao);
+
             }
             conexao.close();
         } catch (SQLException e) {

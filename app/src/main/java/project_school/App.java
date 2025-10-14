@@ -28,8 +28,9 @@ public class App {
         System.out.println("---------------------------------------------------------");
         System.out.println("(1) Inserir Aluno");
         System.out.println("(2) Listar Alunos");
-        System.out.println("(3) Inserir Notas");
-        System.out.println("(4) Média Aluno  ");
+        System.out.println("(3) Listar Professores");
+        System.out.println("(4) Inserir Notas");
+        System.out.println("(5) Média Aluno  ");
         System.out.println("---------------------------------------------------------");
         int value = sc.nextInt();
         switch (value) {
@@ -37,12 +38,15 @@ public class App {
                 vw.inserirAlunoViaConsole();
                 break;
             case 2:
-                p.listarPerson();
+                p.listarAlunos();
                 break;
             case 3:
-                vw.inserirNotasViaConsole();
+                p.listarProfessores();
                 break;
             case 4:
+                vw.inserirNotasViaConsole();
+                break;
+            case 5:
                 System.out.println("Qual id do aluno que deseja ?");
                 int val = sc.nextInt();
                 p.inserir_media_situacao(val);

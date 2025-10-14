@@ -19,6 +19,6 @@ public class AlunoController {
    }
 
    public List<Aluno> listarAlunos() {
-      return alunoDao.listarPerson();
+      return alunoDao.listarAlunos();
    }
 }
